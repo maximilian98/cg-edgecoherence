@@ -64,12 +64,12 @@ function DrawPolygon(polygon) {
     // Step 1: populate ET with edges of polygon
 
     var count = 0;
-    console.log(polygon.vertices);
-    var vert1 = polygon.vertices[0];
-    var vert2 = polygon.vertices[1];
-    var vert3 = polygon.vertices[2];
-    var vert4 = polygon.vertices[3];
-    var vert5 = polygon.vertices[4];
+    console.log(polygon.self_intersect.vertices);
+    var vert1 = polygon.self_intersect.vertices[0];
+    var vert2 = polygon.self_intersect.vertices[1];
+    var vert3 = polygon.self_intersect.vertices[2];
+    var vert4 = polygon.self_intersect.vertices[3];
+    var vert5 = polygon.self_intersect.vertices[4];
     DrawLine(vert1[0],vert1[1],vert2[0],vert2[1]);
     DrawLine(vert2[0],vert2[1],vert3[0],vert3[1]);
     DrawLine(vert3[0],vert3[1],vert4[0],vert4[1]);
