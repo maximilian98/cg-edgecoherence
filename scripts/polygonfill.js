@@ -16,7 +16,7 @@ var polygons = {
     self_intersect: {
         color: '#FF0000', // choose color here!
         vertices: [
-            [2,5],[5,2],[9,8],[9,4],[4,8]
+            [100,250],[250,100],[450,400],[450,200],[200,400]
         ]
     },
     interior_hole: {
@@ -78,11 +78,7 @@ function DrawPolygon(polygon) {
     var y1 = vert1[1];
     var x2 = vert2[0];
     var y2 = vert2[1];
-    console.log("X1: "+x1);
-    console.log("Y1: "+y1);
-    console.log("X2: "+x2);
-    console.log("Y2: "+y2);
-    DrawLine(x1,y1,x2,y2);
+    DrawLine(vert1[0],vert1[1],vert2[0],vert2[1]);
     DrawLine(vert2[0],vert2[1],vert3[0],vert3[1]);
     DrawLine(vert3[0],vert3[1],vert4[0],vert4[1]);
     DrawLine(vert4[0],vert4[1],vert5[0],vert5[1]);
