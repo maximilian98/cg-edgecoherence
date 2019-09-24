@@ -37,6 +37,8 @@ function Init() {
 
     ctx = view.getContext('2d');
 
+
+    console.log("Hello");
     SelectNewPolygon();
 }
 
@@ -61,7 +63,7 @@ function DrawPolygon(polygon) {
 
     // Step 1: populate ET with edges of polygon
 
-
+    
     // Step 2: set y to first scan line with an entry in ET
 
 
