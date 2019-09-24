@@ -66,7 +66,10 @@ function DrawPolygon(polygon) {
     var count = 0;
     console.log(polygon.vertices);
     var vert1 = polygon.vertices[0];
+    console.log(vert1);
     var vert2 = polygon.vertices[1];
+    console.log(vert2);
+
     var vert3 = polygon.vertices[2];
     var vert4 = polygon.vertices[3];
     var vert5 = polygon.vertices[4];
