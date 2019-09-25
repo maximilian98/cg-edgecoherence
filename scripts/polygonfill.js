@@ -2,9 +2,9 @@ var view;
 var ctx;
 var polygons = {
     convex: {
-        color: '', // choose color here!
+        color: '#0000FF', // choose color here!
         vertices: [
-            // fill in vertices here!
+            [100,250],[300,250],[450,400],[250,550],[50,350]
         ]
     },
     concave: {
