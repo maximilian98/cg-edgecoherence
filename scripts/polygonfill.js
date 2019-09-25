@@ -4,13 +4,13 @@ var polygons = {
     convex: {
         color: '#0000FF', // choose color here!
         vertices: [
-            [100,250],[300,250],[450,400],[250,550],[50,350]
+            [200,250],[400,250],[550,400],[350,550],[150,350]
         ]
     },
     concave: {
-        color: '', // choose color here!
+        color: '#00FF00', // choose color here!
         vertices: [
-            // fill in vertices here!
+            [100,250],[550,100],[450,350],[700,550],[300,400]
         ]
     },
     self_intersect: {
