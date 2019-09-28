@@ -20,7 +20,7 @@ var polygons = {
         ]
     },
     interior_hole: {
-        color: '#000000', // choose color here!
+        color: '#00AAAA', // choose color here!
         vertices: [
             [400,50],[350,550],[50,250],[700,200],[200,350]
         ]
@@ -63,17 +63,7 @@ function DrawPolygon(polygon) {
 
     // Step 1: populate ET with edges of polygon
 
-    var vert1 = polygon.vertices[0];
-    var vert2 = polygon.vertices[1];
-    var vert3 = polygon.vertices[2];
-    var vert4 = polygon.vertices[3];
-    var vert5 = polygon.vertices[4];
-    DrawLine(vert1[0],vert1[1],vert2[0],vert2[1]);
-    DrawLine(vert2[0],vert2[1],vert3[0],vert3[1]);
-    DrawLine(vert3[0],vert3[1],vert4[0],vert4[1]);
-    DrawLine(vert4[0],vert4[1],vert5[0],vert5[1]);
-    DrawLine(vert5[0],vert5[1],vert1[0],vert1[1]);
-    console.log(polygon.vertices[0])
+
 
     var minimumY=view.height;
     for(var i = 0; i<polygon.vertices.length; i++){
@@ -138,23 +128,22 @@ function DrawPolygon(polygon) {
             active_list.InsertEdge(first_edge.next_entry);
             first_edge = first_edge.next_entry;
         }
+        active_list.SortList();
+        //remove if horizontal line is in the list...or is this already done by not adding it to the edge table
+        active_list.RemoveCompleteEdges(minimumY);
     }   
 
     while(edge_table[minimumY].first_entry!==null || active_list.first_entry!==null){
-        console.log("got into the first while loop")
-        //adds edges to active list
-
-        active_list.SortList();
-        active_list.RemoveCompleteEdges(minimumY);
+        
+        
         var first_al_edge = active_list.first_entry;
         var second_al_edge = first_al_edge.next_entry;
-
         var x1 = first_al_edge.x;
         var x2 = second_al_edge.x;
         x1 = Math.round(x1+.4999);
         x2 = Math.round((x2+.5)-1)
-        console.log("While X1: "+x1);
-        console.log("While X2: "+x2);
+        console.log("X1:"+x1 + " y:"+minimumY);
+        console.log("X2:"+x2);
 
         if(x1<=x2){
             DrawLine(x1, minimumY, x2, minimumY);
@@ -185,7 +174,23 @@ function DrawPolygon(polygon) {
                 first_edge = first_edge.next_entry;
             }
         }
+        active_list.SortList();
+        active_list.RemoveCompleteEdges(minimumY);
+
     }
+
+    // polygon.color = '#000000';
+    // var vert1 = polygon.vertices[0];
+    // var vert2 = polygon.vertices[1];
+    // var vert3 = polygon.vertices[2];
+    // var vert4 = polygon.vertices[3];
+    // var vert5 = polygon.vertices[4];
+    // DrawLine(vert1[0],vert1[1],vert2[0],vert2[1]);
+    // DrawLine(vert2[0],vert2[1],vert3[0],vert3[1]);
+    // DrawLine(vert3[0],vert3[1],vert4[0],vert4[1]);
+    // DrawLine(vert4[0],vert4[1],vert5[0],vert5[1]);
+    // DrawLine(vert5[0],vert5[1],vert1[0],vert1[1]);
+
 
     
     // Step 3: Repeat until ET[y] is NULL and AL is NULL
