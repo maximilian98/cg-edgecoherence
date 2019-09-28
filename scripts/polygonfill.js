@@ -128,17 +128,22 @@ function DrawPolygon(polygon) {
     console.log("Minimum y: "+minimumY)
     // Step 2: set y to first scan line with an entry in ET
 
+    console.log("just before the while loop")
 
-    while(edge_table[minimumY].first_entry!==null && active_list.first_entry!==null){
-        //adds edges to active list
-        if(edge_table[minimumY].first_entry!==null){
-            var first_edge = edge_table[minimumY].first_entry;
-            active_list.InsertEdge(first_edge);
-            while(first_edge.next_entry!==null){
-                active_list.InsertEdge(first_edge.next_entry);
-                first_edge = first_edge.next_entry;
-            }
+    if(edge_table[minimumY].first_entry!==null){
+        console.log("in if statement")
+        var first_edge = edge_table[minimumY].first_entry;
+        active_list.InsertEdge(first_edge);
+        while(first_edge.next_entry!==null){
+            active_list.InsertEdge(first_edge.next_entry);
+            first_edge = first_edge.next_entry;
         }
+    }   
+
+    while(edge_table[minimumY].first_entry!==null || active_list.first_entry!==null){
+        console.log("got into the first while loop")
+        //adds edges to active list
+
         active_list.SortList();
         active_list.RemoveCompleteEdges(minimumY);
         var first_al_edge = active_list.first_entry;
@@ -148,6 +153,9 @@ function DrawPolygon(polygon) {
         var x2 = second_al_edge.x;
         x1 = Math.round(x1+.4999);
         x2 = Math.round((x2+.5)-1)
+        console.log("While X1: "+x1);
+        console.log("While X2: "+x2);
+
         if(x1<=x2){
             DrawLine(x1, minimumY, x2, minimumY);
         }
@@ -157,7 +165,7 @@ function DrawPolygon(polygon) {
         while(second_al_edge.next_entry!==null){
             
             first_al_edge = second_al_edge.next_entry;
-            second_al_edge = first_entry.next_entry;
+            second_al_edge = first_al_edge.next_entry;
             x1 = first_al_edge.x;
             x2 = second_al_edge.x;
             x1 = Math.round(x1+.4999);
@@ -169,6 +177,14 @@ function DrawPolygon(polygon) {
             second_al_edge.x = second_al_edge.x + second_al_edge.inv_slope;
         }
         minimumY++;
+        if(edge_table[minimumY].first_entry!==null){
+            var first_edge = edge_table[minimumY].first_entry;
+            active_list.InsertEdge(first_edge);
+            while(first_edge.next_entry!==null){
+                active_list.InsertEdge(first_edge.next_entry);
+                first_edge = first_edge.next_entry;
+            }
+        }
     }
 
     
