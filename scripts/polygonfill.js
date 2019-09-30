@@ -36,9 +36,6 @@ function Init() {
     view.height = h;
 
     ctx = view.getContext('2d');
-
-
-    console.log("Hello");
     SelectNewPolygon();
 }
 
@@ -76,8 +73,6 @@ function DrawPolygon(polygon) {
             vert2 = polygon.vertices[i+1];
         }
         //now add to the ET
-        console.log("vert1: "+vert1);
-        console.log("vert2: "+vert2);
 
         var y_max;
         var x_bottom;
@@ -97,31 +92,17 @@ function DrawPolygon(polygon) {
             edge = new EdgeEntry(y_max,x_bottom,deltaX,deltaY);
             edge_table[y_min].InsertEdge(edge);
 
-        }else if (deltaY===0){
-            //we don't draw and we dont need to add to the edge list because the deltaX/deltaY will be undefined
-        }else{
+        }else if (deltaY<0){
             y_max = vert2[1];
             x_bottom = vert1[0];
             y_min = vert1[1]
             edge = new EdgeEntry(y_max,x_bottom,deltaX,deltaY);
             edge_table[y_min].InsertEdge(edge);
         }
-
-        // console.log("edge: "+edge)
-        console.log("Y Max: "+ y_max);
-        console.log("X bottom: "+x_bottom);
-
-        // 1/slope ( delta x / delta y) ----given that delta y is not 0, we don't draw if delta x is 0 either
-
     }
-    console.log("Edge Table" +edge_table[350].first_entry)
-    console.log("Minimum y: "+minimumY)
+    
     // Step 2: set y to first scan line with an entry in ET
-
-    console.log("just before the while loop")
-
     if(edge_table[minimumY].first_entry!==null){
-        console.log("in if statement")
         var first_edge = edge_table[minimumY].first_entry;
         active_list.InsertEdge(first_edge);
         while(first_edge.next_entry!==null){
@@ -129,22 +110,24 @@ function DrawPolygon(polygon) {
             first_edge = first_edge.next_entry;
         }
         active_list.SortList();
-        //remove if horizontal line is in the list...or is this already done by not adding it to the edge table
         active_list.RemoveCompleteEdges(minimumY);
     }   
-
+    
+    // Step 3: Repeat until ET[y] is NULL and AL is NULL
+    //   a) Move all entries at ET[y] into AL
+    //   b) Sort AL to maintain ascending x-value order
+    //   c) Remove entries from AL whose ymax equals y
+    //   d) Draw horizontal line for each span (pairs of entries in the AL)
+    //   e) Increment y by 1
+    //   f) Update x-values for all remaining entries in the AL (increment by 1/m)
+    
     while(edge_table[minimumY].first_entry!==null || active_list.first_entry!==null){
-        
-        
         var first_al_edge = active_list.first_entry;
         var second_al_edge = first_al_edge.next_entry;
         var x1 = first_al_edge.x;
         var x2 = second_al_edge.x;
         x1 = Math.round(x1+.4999);
         x2 = Math.round((x2+.5)-1)
-        console.log("X1:"+x1 + " y:"+minimumY);
-        console.log("X2:"+x2);
-
         if(x1<=x2){
             DrawLine(x1, minimumY, x2, minimumY);
         }
@@ -176,30 +159,7 @@ function DrawPolygon(polygon) {
         }
         active_list.SortList();
         active_list.RemoveCompleteEdges(minimumY);
-
     }
-
-    // polygon.color = '#000000';
-    // var vert1 = polygon.vertices[0];
-    // var vert2 = polygon.vertices[1];
-    // var vert3 = polygon.vertices[2];
-    // var vert4 = polygon.vertices[3];
-    // var vert5 = polygon.vertices[4];
-    // DrawLine(vert1[0],vert1[1],vert2[0],vert2[1]);
-    // DrawLine(vert2[0],vert2[1],vert3[0],vert3[1]);
-    // DrawLine(vert3[0],vert3[1],vert4[0],vert4[1]);
-    // DrawLine(vert4[0],vert4[1],vert5[0],vert5[1]);
-    // DrawLine(vert5[0],vert5[1],vert1[0],vert1[1]);
-
-
-    
-    // Step 3: Repeat until ET[y] is NULL and AL is NULL
-    //   a) Move all entries at ET[y] into AL
-    //   b) Sort AL to maintain ascending x-value order
-    //   c) Remove entries from AL whose ymax equals y
-    //   d) Draw horizontal line for each span (pairs of entries in the AL)
-    //   e) Increment y by 1
-    //   f) Update x-values for all remaining entries in the AL (increment by 1/m)
 }
 
 // SelectNewPolygon(): triggered when new selection in drop down menu is made
